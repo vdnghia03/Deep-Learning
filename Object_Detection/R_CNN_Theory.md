@@ -11,7 +11,7 @@ Mục tiêu cơ bản của Object Detection là, khi nhận một ảnh đầu 
 **Bounding Box** (Hộp giới hạn) là hình vuông hoặc hình chữ nhật được vẽ trên ảnh để định vị đối tượng. Nó được biểu diễn bằng 4 giá trị:
 *   Tọa độ góc trên bên trái: $X$ và $Y$.
 *   Chiều rộng (width) và Chiều cao (height).
-*   ![OurGoal](/assets/rcnn1.png)
+*   ![OurGoal](../assets/rcnn1.png)
 
 ### II. Hạn Chế của Kiến Trúc Cơ Bản (Object Localization)
 
@@ -33,7 +33,7 @@ Trước khi đến R-CNN, ta xét một kiến trúc mạng CNN cơ bản (dùn
 #### C. Nhược điểm
 Kiến trúc này chỉ có một nhược điểm lớn: **Nó chỉ có thể phát hiện một đối tượng duy nhất** trong ảnh, vì nó chỉ xuất ra một bộ tọa độ hộp giới hạn. Kiến trúc này được sử dụng cho **Định vị Đối tượng (Object Localization)**, nơi chỉ có một đối tượng được mong đợi.
 
-![ObjectLocalization](/assets/rcnn2.png)
+![ObjectLocalization](../assets/rcnn2.png)
 
 ### III. Hạn Chế của Phương pháp Cửa Sổ Trượt (Sliding Window)
 
@@ -42,7 +42,7 @@ Kiến trúc này chỉ có một nhược điểm lớn: **Nó chỉ có thể 
 2.  **Phân loại:** Vùng được trích xuất được đưa qua một bộ phân loại mạng CNN.
 3.  **Đầu ra:** Mạng xuất ra $C + 1$ lớp ($C$ là các lớp đối tượng mong đợi, **$+1$ là nền (background)**, vì vùng được trích có thể không chứa đối tượng nào).
 4.  **Lặp lại:** Cửa sổ trượt sau đó trượt đến mọi vị trí có thể.
-   ![SlidingWindow](/assets/rcnn3.png)
+   ![SlidingWindow](../assets/rcnn3.png)
 
 **Vấn đề:** Phương pháp này không khả thi về mặt tính toán vì số lượng vị trí cần kiểm tra là **cực kỳ lớn**:
 *   Số vị trí tiềm năng là $(W - w + 1) \times (H - h + 1)$.
@@ -61,12 +61,12 @@ Kiến trúc này chỉ có một nhược điểm lớn: **Nó chỉ có thể 
 Quy trình hoạt động của R-CNN diễn ra theo các bước sau:
 1.  **Đầu vào:** Ảnh gốc.
 2.  **Selective Search:** Chạy Selective Search để tạo ra các đề xuất vùng (region proposals).
-   ![SelectiveSearch](/assets/rcnn4.png)
+   ![SelectiveSearch](../assets/rcnn4.png)
 3.  **Trích xuất & Biến đổi:** Trích xuất các vùng đề xuất từ ảnh gốc, sau đó biến đổi chúng thành hình vuông (để phù hợp với đầu vào của module CNN).
 4.  **CNN Module:** Các vùng được đưa qua module CNN để trich xuat dac trung
 5.  **Nhánh Phan Loai (Classification):** Dua ra label cua vung proposal do
 6.  **Nhánh Hồi quy (Bounding Box Regression):** Thêm một nhánh phụ trách việc **tinh chỉnh (tweak)** hộp giới hạn, giúp nó chính xác hơn (vì hộp do Selective Search tạo ra có thể không chính xác, ví dụ: thiếu tay áo hoặc tai ngựa).
-    ![RCNN](/assets/rcnn5.webp)
+    ![RCNN](../assets/rcnn5.webp)
 
 ### V. Chi tiết Hồi quy Bounding Box (Bounding Box Regression)
 
@@ -83,7 +83,7 @@ Quá trình này sử dụng hai phép toán chính:
     *   Sử dụng hàm lũy thừa ($e^x$) để đảm bảo chiều rộng luôn là giá trị dương, ngay cả khi $T_w$ là số âm.
     *   Chiều cao $B_h$ được tính tương tự.
     
-    ![BoxRegression](/assets/rcnn6.png)
+    ![BoxRegression](../assets/rcnn6.png)
 
 ### VI. Non-Maximal Suppression (NMS)
 
@@ -100,7 +100,7 @@ NMS được sử dụng để:
 *   Chọn ra hộp dự đoán có IoU cao nhất.
 *   **Lưu ý:** NMS chỉ được áp dụng khi các hộp giới hạn đang tham chiếu đến **cùng một đối tượng**.
 
-    ![NonMaximal](/assets/rcnn7.png)
+    ![NonMaximal](../assets/rcnn7.png)
 
 ### VII. Đánh giá Mô hình: Mean Average Precision (mAP)
 
@@ -121,7 +121,7 @@ Quy trình tính mAP tập trung vào từng lớp đối tượng:
     *   Tính Precision và Recall mới sau khi xem xét hộp đó.
     *   Vẽ điểm Precision-Recall trên biểu đồ.
 3.  **Average Precision (AP):** Sau khi xem xét tất cả các hộp, AP được tính bằng **diện tích dưới đường cong Precision-Recall**.
-   ![NonMaximal](/assets/rcnn8.png)
+   ![NonMaximal](../assets/rcnn8.png)
 4.  **Mean Average Precision (mAP):** Lấy giá trị trung bình (average) của AP qua tất cả các lớp (ví dụ: (AP Dog + AP Cat) / 2).
 
 **Lưu ý mở rộng:** Trong thực tế, mAP thường được tính bằng cách lấy trung bình các giá trị AP sử dụng các ngưỡng IoU khác nhau (ví dụ: IoU từ 0.5 đến 0.95, với bước 0.05).
