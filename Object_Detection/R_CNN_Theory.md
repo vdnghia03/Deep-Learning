@@ -11,7 +11,7 @@ Mục tiêu cơ bản của Object Detection là, khi nhận một ảnh đầu 
 **Bounding Box** (Hộp giới hạn) là hình vuông hoặc hình chữ nhật được vẽ trên ảnh để định vị đối tượng. Nó được biểu diễn bằng 4 giá trị:
 *   Tọa độ góc trên bên trái: $X$ và $Y$.
 *   Chiều rộng (width) và Chiều cao (height).
-*   ![OurGoal](Object_Detection/assets/rcnn1.png)
+*   ![OurGoal](/Object_Detection/assets/rcnn1.png)
 
 ### II. Hạn Chế của Kiến Trúc Cơ Bản (Object Localization)
 
