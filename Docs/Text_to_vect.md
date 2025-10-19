@@ -27,6 +27,8 @@ Phương pháp này biểu diễn câu bằng một vector dựa trên sự **xu
 ### 2. Frequency Bag of Words (BOW Tần suất)
 Phương pháp này biểu diễn câu bằng vector cho biết **tần suất xuất hiện** (số lần xuất hiện) của mỗi từ trong câu đó.
 
+![](./Docs/Images/1_vocab.png)
+
 ## IV. XỬ LÝ CÁC VẤN ĐỀ THỰC TẾ
 
 ### 1. Vấn đề Vector Thưa (Sparse Vector)
